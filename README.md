@@ -1,73 +1,73 @@
-# React + TypeScript + Vite
+# ⚡ Tredence — HR Workflow Designer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Tredence Workflow Designer](public/favicon.svg) <!-- Replace with an actual screenshot if available -->
 
-Currently, two official plugins are available:
+A premium, interactive Visual Workflow Designer built with React, TypeScript, and React Flow. 
+Design, configure, validate, and simulate complex HR logic flows through an intuitive drag-and-drop interface.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
 
-## React Compiler
+- **🎨 Premium OLED UI**: A sleek, fully custom dark mode interface built with Tailwind CSS, featuring subtle glassmorphism, glowing accents, and dynamic grid backgrounds.
+- **🖱️ Drag-and-Drop Canvas**: Seamlessly build workflows by dragging nodes from the left palette onto the interactive React Flow canvas.
+- **🧩 Custom Node Types**:
+  - **🟢 Start Node**: The entry point of your workflow.
+  - **🔵 Task Node**: Manual HR tasks with configurable assignees and due dates.
+  - **🟠 Approval Node**: Logic gates requiring specific managerial roles.
+  - **🟣 Automated Step**: System-level automated actions and webhooks.
+  - **🔴 End Node**: The terminal point of the workflow.
+- **🔗 Dynamic Edge Routing**: Connections between nodes automatically inherit the exact color of their source node, creating visually distinct and traceable logic paths.
+- **🛡️ Real-time Validation Engine**: Built-in rules engine that ensures workflows are structurally sound (e.g., exactly one Start Node, no disconnected edges, valid paths to End Nodes).
+- **🕹️ Workflow Simulator**: A step-by-step simulation engine that executes the graph visually, outputting a detailed run log of success states and warnings.
+- **💾 Import / Export**: Save your configured workflow state as a lightweight JSON file and instantly import it back to resume work later.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Technology Stack
 
-## Expanding the ESLint configuration
+- **Framework**: [React 18](https://react.dev/) + [Vite](https://vitejs.dev/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Canvas Engine**: [React Flow (xyflow)](https://reactflow.dev/)
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Ensure you have [Node.js](https://nodejs.org/) installed on your machine.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Installation
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1. **Clone the repository** (or download the source code).
+2. **Navigate into the project directory**:
+   ```bash
+   cd tradence-assignment
+   ```
+3. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+4. **Start the development server**:
+   ```bash
+   npm run dev
+   ```
+5. **Open in Browser**: Navigate to `http://localhost:5173`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🧠 Architecture Overview
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **`src/components/Canvas/`**: Contains the core `React Flow` implementation, drop handlers, and keyboard shortcut listeners.
+- **`src/components/ConfigPanel/`**: Dynamic side-panel components that render form inputs based on the currently selected node's type.
+- **`src/nodes/`**: Individual React components defining the custom visual appearance and layout of each node type.
+- **`src/hooks/useWorkflowStore.ts`**: The central Zustand store containing the single source of truth for the graph state, selection state, and simulation logs.
+- **`src/hooks/useValidation.ts`**: The logic engine that recursively traverses the graph edges to ensure structural integrity.
+- **`src/utils/serializer.ts`**: Helper functions for safely encoding the application state to Base64 JSON and handling File API uploads.
+
+## 💡 How to Use
+
+1. **Build**: Drag a `Start Node` onto the canvas. Drag subsequent nodes (Tasks, Approvals) and connect them by dragging from the bottom handle of one node to the top handle of another.
+2. **Configure**: Click on any node to open its specific properties in the right-hand Config Panel.
+3. **Validate**: Click the **Validate** button in the top toolbar to check for broken links or missing configurations.
+4. **Simulate**: Once validated, click **Run Workflow** to watch the system simulate traversing your logic path!
+
+---
+
+*Designed and engineered with attention to detail.*

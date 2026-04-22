@@ -50,10 +50,6 @@ interface WorkflowState {
   // ── Workflow metadata ──
   workflowName: string;
   
-  // ── Theme ──
-  theme: 'light' | 'dark';
-  toggleTheme: () => void;
-  
   // ── React Flow handlers ──
   onNodesChange: OnNodesChange<WorkflowNode>;
   onEdgesChange: OnEdgesChange;
@@ -83,14 +79,6 @@ interface WorkflowState {
 
 // ─── Store Implementation ────────────────────────────────────────
 
-// Helper to get initial theme
-const getInitialTheme = (): 'light' | 'dark' => {
-  if (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: light)').matches) {
-    return 'light';
-  }
-  return 'dark'; // Default to dark for that premium feel
-};
-
 export const useWorkflowStore = create<WorkflowState>((set, get) => ({
   nodes: [],
   edges: [],
@@ -99,10 +87,7 @@ export const useWorkflowStore = create<WorkflowState>((set, get) => ({
   isSimulating: false,
   showSimulation: false,
   validationResult: null,
-  workflowName: 'Untitled Workflow',
-  theme: getInitialTheme(),
-
-  toggleTheme: () => set((state) => ({ theme: state.theme === 'light' ? 'dark' : 'light' })),
+  workflowName: 'tradence',
 
   // ── React Flow change handlers ──
   onNodesChange: (changes: NodeChange<WorkflowNode>[]) => {
@@ -130,12 +115,27 @@ export const useWorkflowStore = create<WorkflowState>((set, get) => ({
   },
 
   onConnect: (connection: Connection) => {
+    // Find the source node to determine edge color
+    const sourceNode = get().nodes.find(n => n.id === connection.source);
+    let strokeColor = '#6366f1'; // default indigo
+    
+    if (sourceNode) {
+      switch (sourceNode.data.type) {
+        case 'start': strokeColor = '#10b981'; break;
+        case 'task': strokeColor = '#3b82f6'; break;
+        case 'approval': strokeColor = '#f59e0b'; break;
+        case 'automated': strokeColor = '#a855f7'; break;
+        case 'end': strokeColor = '#f43f5e'; break;
+      }
+    }
+
     const newEdge: WorkflowEdge = {
       ...connection,
       id: `e-${connection.source}-${connection.target}`,
       animated: true,
-      style: { stroke: '#6366f1', strokeWidth: 2 },
+      style: { stroke: strokeColor, strokeWidth: 2 },
     } as WorkflowEdge;
+    
     set({ edges: addEdge(newEdge, get().edges) as WorkflowEdge[] });
   },
 

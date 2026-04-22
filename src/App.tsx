@@ -20,11 +20,9 @@ import { Toolbar } from './components/Toolbar/Toolbar';
 import { SimulationPanel } from './components/SimulationPanel/SimulationPanel';
 
 export default function App() {
-  const theme = useWorkflowStore((s) => s.theme);
-
   return (
     <ReactFlowProvider>
-      <div className={`app-shell theme-${theme}`}>
+      <div className="app-shell">
         {/* Left Sidebar — Node Palette */}
         <NodeSidebar />
 

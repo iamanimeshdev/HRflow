@@ -150,10 +150,10 @@ export function WorkflowCanvas() {
         proOptions={{ hideAttribution: true }}
       >
         <Background
-          variant={BackgroundVariant.Dots}
-          gap={20}
+          variant={BackgroundVariant.Lines}
+          gap={24}
           size={1}
-          color="rgba(148, 163, 184, 0.15)"
+          color="rgba(255, 255, 255, 0.05)"
         />
         <Controls
           className="flow-controls"

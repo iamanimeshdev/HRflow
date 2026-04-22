@@ -90,7 +90,7 @@ export function NodeSidebar() {
           </svg>
         </div>
         <div>
-          <h1 className="brand-title">FlowHR</h1>
+          <h1 className="brand-title">Tredence</h1>
           <p className="brand-subtitle">Workflow Designer</p>
         </div>
       </div>

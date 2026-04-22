@@ -14,8 +14,6 @@ import {
   AlertTriangle,
   Loader2,
   Trash2,
-  Sun,
-  Moon,
 } from 'lucide-react';
 import { useWorkflowStore } from '../../hooks/useWorkflowStore';
 import { useValidation } from '../../hooks/useValidation';
@@ -33,8 +31,6 @@ export function Toolbar() {
   const setShowSimulation = useWorkflowStore((s) => s.setShowSimulation);
   const loadWorkflow = useWorkflowStore((s) => s.loadWorkflow);
   const clearWorkflow = useWorkflowStore((s) => s.clearWorkflow);
-  const theme = useWorkflowStore((s) => s.theme);
-  const toggleTheme = useWorkflowStore((s) => s.toggleTheme);
 
   const { validate, validationResult } = useValidation();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -123,16 +119,6 @@ export function Toolbar() {
       </div>
 
       <div className="toolbar-actions">
-        <button
-          className="toolbar-btn toolbar-btn-ghost theme-toggle-btn"
-          onClick={toggleTheme}
-          title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-        >
-          {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
-        </button>
-
-        <div className="toolbar-divider" />
-
         <button
           className="toolbar-btn toolbar-btn-secondary"
           onClick={handleValidate}
