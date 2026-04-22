@@ -5,7 +5,7 @@
  * Dynamically renders parameter fields based on the selected action.
  */
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useWorkflowStore } from '../../hooks/useWorkflowStore';
 import { getAutomations } from '../../api/mockApi';
 import type { AutomatedStepData, AutomationAction } from '../../types/workflow';

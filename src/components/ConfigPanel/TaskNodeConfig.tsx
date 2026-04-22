@@ -3,7 +3,7 @@
  * Title (required), description, assignee, due date, custom fields
  */
 
-import React from 'react';
+
 import { useWorkflowStore } from '../../hooks/useWorkflowStore';
 import type { TaskNodeData, KeyValuePair } from '../../types/workflow';
 

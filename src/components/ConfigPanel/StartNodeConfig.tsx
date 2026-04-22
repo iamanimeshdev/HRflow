@@ -3,7 +3,7 @@
  * Title + key-value metadata pairs
  */
 
-import React from 'react';
+
 import { useWorkflowStore } from '../../hooks/useWorkflowStore';
 import type { StartNodeData, KeyValuePair } from '../../types/workflow';
 

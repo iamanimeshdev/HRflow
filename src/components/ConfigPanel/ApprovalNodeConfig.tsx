@@ -3,7 +3,7 @@
  * Title, approver role, auto-approve threshold
  */
 
-import React from 'react';
+
 import { useWorkflowStore } from '../../hooks/useWorkflowStore';
 import type { ApprovalNodeData } from '../../types/workflow';
 

@@ -3,7 +3,7 @@
  * End message + summary flag toggle
  */
 
-import React from 'react';
+
 import { useWorkflowStore } from '../../hooks/useWorkflowStore';
 import type { EndNodeData } from '../../types/workflow';
 
