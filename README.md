@@ -1,13 +1,13 @@
 # ⚡ Tredence — HR Workflow Designer
+<img width="1919" height="874" alt="image" src="https://github.com/user-attachments/assets/b421549b-3105-4fe5-be0c-b2ea6b4418bc" />
 
-![Tredence Workflow Designer](public/favicon.svg) <!-- Replace with an actual screenshot if available -->
+
 
 A premium, interactive Visual Workflow Designer built with React, TypeScript, and React Flow. 
 Design, configure, validate, and simulate complex HR logic flows through an intuitive drag-and-drop interface.
 
-## ✨ Features
+## Features
 
-- **🎨 Premium OLED UI**: A sleek, fully custom dark mode interface built with Tailwind CSS, featuring subtle glassmorphism, glowing accents, and dynamic grid backgrounds.
 - **🖱️ Drag-and-Drop Canvas**: Seamlessly build workflows by dragging nodes from the left palette onto the interactive React Flow canvas.
 - **🧩 Custom Node Types**:
   - **🟢 Start Node**: The entry point of your workflow.
