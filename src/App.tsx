@@ -12,7 +12,7 @@
  */
 
 import { ReactFlowProvider } from '@xyflow/react';
-import { useWorkflowStore } from './hooks/useWorkflowStore';
+
 import { NodeSidebar } from './components/Sidebar/NodeSidebar';
 import { WorkflowCanvas } from './components/Canvas/WorkflowCanvas';
 import { ConfigPanel } from './components/ConfigPanel/ConfigPanel';

@@ -15,7 +15,7 @@ export interface KeyValuePair {
   value: string;
 }
 
-export interface StartNodeData {
+export interface StartNodeData extends Record<string, unknown> {
   type: 'start';
   title: string;
   metadata: KeyValuePair[];
@@ -23,7 +23,7 @@ export interface StartNodeData {
   errors?: string[];
 }
 
-export interface TaskNodeData {
+export interface TaskNodeData extends Record<string, unknown> {
   type: 'task';
   title: string;
   description: string;
@@ -33,7 +33,7 @@ export interface TaskNodeData {
   errors?: string[];
 }
 
-export interface ApprovalNodeData {
+export interface ApprovalNodeData extends Record<string, unknown> {
   type: 'approval';
   title: string;
   approverRole: string;
@@ -41,7 +41,7 @@ export interface ApprovalNodeData {
   errors?: string[];
 }
 
-export interface AutomatedStepData {
+export interface AutomatedStepData extends Record<string, unknown> {
   type: 'automated';
   title: string;
   actionId: string;
@@ -49,7 +49,7 @@ export interface AutomatedStepData {
   errors?: string[];
 }
 
-export interface EndNodeData {
+export interface EndNodeData extends Record<string, unknown> {
   type: 'end';
   endMessage: string;
   summaryFlag: boolean;

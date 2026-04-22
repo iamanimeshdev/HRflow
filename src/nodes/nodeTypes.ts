@@ -15,7 +15,7 @@ import { ApprovalNode } from './ApprovalNode';
 import { AutomatedStepNode } from './AutomatedStepNode';
 import { EndNode } from './EndNode';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 export const nodeTypes: NodeTypes = {
   start: StartNode as any,
   task: TaskNode as any,
