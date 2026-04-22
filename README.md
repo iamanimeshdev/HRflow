@@ -40,7 +40,7 @@ Ensure you have [Node.js](https://nodejs.org/) installed on your machine.
 1. **Clone the repository** (or download the source code).
 2. **Navigate into the project directory**:
    ```bash
-   cd tradence-assignment
+   cd tredence-assignment
    ```
 3. **Install dependencies**:
    ```bash

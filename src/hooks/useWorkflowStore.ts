@@ -87,7 +87,7 @@ export const useWorkflowStore = create<WorkflowState>((set, get) => ({
   isSimulating: false,
   showSimulation: false,
   validationResult: null,
-  workflowName: 'tradence',
+  workflowName: 'tredence',
 
   // ── React Flow change handlers ──
   onNodesChange: (changes: NodeChange<WorkflowNode>[]) => {
