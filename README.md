@@ -1,6 +1,11 @@
 # ⚡ Tredence — HR Workflow Designer
 
-<img width="1919" height="874" alt="image" src="https://github.com/user-attachments/assets/b421549b-3105-4fe5-be0c-b2ea6b4418bc" />
+<div align="center">
+  <img width="49%" alt="Screen 1" src="https://github.com/user-attachments/assets/e44b66ce-4f15-494e-8a79-38c40de3bf50" />
+  &nbsp;
+  <img width="49%" alt="Screen 2" src="https://github.com/user-attachments/assets/b30759ee-a0a6-4e67-b4d8-d4ef846b9877" />
+</div>
+
 
 A premium, interactive Visual Workflow Designer built for HR administrators to construct, configure, validate, and simulate complex operational workflows (e.g., employee onboarding, document verification, leave approvals). It features an intuitive, state-of-the-art drag-and-drop interface supercharged with keyboard shortcuts (hotkeys), intelligent auto-alignment, dynamic edge styling, and a sleek dark/light mode aesthetic for a true enterprise SaaS experience.
 
