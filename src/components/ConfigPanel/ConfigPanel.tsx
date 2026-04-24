@@ -5,6 +5,7 @@
  * Uses TypeScript discriminated union narrowing for type safety.
  */
 
+import { useState, useEffect } from 'react';
 import { X, Play, ClipboardList, ShieldCheck, Zap, Flag } from 'lucide-react';
 import { useWorkflowStore } from '../../hooks/useWorkflowStore';
 import { StartNodeConfig } from './StartNodeConfig';
@@ -43,10 +44,20 @@ export function ConfigPanel() {
   const selectNode = useWorkflowStore((s) => s.selectNode);
 
   const selectedNode = nodes.find((n) => n.id === selectedNodeId);
+  const [activeNode, setActiveNode] = useState(selectedNode);
 
-  if (!selectedNode) {
+  useEffect(() => {
+    if (selectedNode) {
+      setActiveNode(selectedNode);
+    }
+  }, [selectedNode]);
+
+  const isOpen = !!selectedNode;
+  const displayNode = selectedNode || activeNode;
+
+  if (!displayNode) {
     return (
-      <aside className="config-panel config-panel-empty">
+      <aside className={`config-panel config-panel-empty ${isOpen ? 'open' : ''}`}>
         <div className="config-empty-state">
           <div className="config-empty-icon">
             <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
@@ -61,10 +72,10 @@ export function ConfigPanel() {
     );
   }
 
-  const nodeType = selectedNode.data.type;
+  const nodeType = displayNode.data.type;
 
   return (
-    <aside className="config-panel">
+    <aside className={`config-panel ${isOpen ? 'open' : ''}`}>
       {/* Panel Header */}
       <div className="config-header">
         <div className="config-header-info">
@@ -73,7 +84,7 @@ export function ConfigPanel() {
           </span>
           <div>
             <h3 className="config-header-title">{NODE_LABELS[nodeType]}</h3>
-            <p className="config-header-id">ID: {selectedNode.id}</p>
+            <p className="config-header-id">ID: {displayNode.id}</p>
           </div>
         </div>
         <button
@@ -87,20 +98,20 @@ export function ConfigPanel() {
 
       {/* Dynamic Form Content */}
       <div className="config-body">
-        {selectedNode.data.type === 'start' && (
-          <StartNodeConfig nodeId={selectedNode.id} data={selectedNode.data} />
+        {displayNode.data.type === 'start' && (
+          <StartNodeConfig nodeId={displayNode.id} data={displayNode.data} />
         )}
-        {selectedNode.data.type === 'task' && (
-          <TaskNodeConfig nodeId={selectedNode.id} data={selectedNode.data} />
+        {displayNode.data.type === 'task' && (
+          <TaskNodeConfig nodeId={displayNode.id} data={displayNode.data} />
         )}
-        {selectedNode.data.type === 'approval' && (
-          <ApprovalNodeConfig nodeId={selectedNode.id} data={selectedNode.data} />
+        {displayNode.data.type === 'approval' && (
+          <ApprovalNodeConfig nodeId={displayNode.id} data={displayNode.data} />
         )}
-        {selectedNode.data.type === 'automated' && (
-          <AutomatedStepConfig nodeId={selectedNode.id} data={selectedNode.data} />
+        {displayNode.data.type === 'automated' && (
+          <AutomatedStepConfig nodeId={displayNode.id} data={displayNode.data} />
         )}
-        {selectedNode.data.type === 'end' && (
-          <EndNodeConfig nodeId={selectedNode.id} data={selectedNode.data} />
+        {displayNode.data.type === 'end' && (
+          <EndNodeConfig nodeId={displayNode.id} data={displayNode.data} />
         )}
       </div>
     </aside>

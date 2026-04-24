@@ -1,17 +1,21 @@
 /**
  * Task Node — Represents a manual HR task (e.g., review, onboarding step).
- * Blue accent with clipboard icon. Shows assignee and due date.
  */
-
 import { memo } from 'react';
 import { Handle, Position, type NodeProps } from '@xyflow/react';
 import { ClipboardList } from 'lucide-react';
+import { useWorkflowStore } from '../hooks/useWorkflowStore';
 import type { TaskNodeData } from '../types/workflow';
 
 type TaskNodeProps = NodeProps & { data: TaskNodeData };
 
 function TaskNodeComponent({ data, selected }: TaskNodeProps) {
   const hasErrors = data.errors && data.errors.length > 0;
+  const layoutDirection = useWorkflowStore((s) => s.layoutDirection);
+  
+  const isHorizontal = layoutDirection === 'LR';
+  const targetPos = isHorizontal ? Position.Left : Position.Top;
+  const sourcePos = isHorizontal ? Position.Right : Position.Bottom;
 
   return (
     <div
@@ -31,14 +35,10 @@ function TaskNodeComponent({ data, selected }: TaskNodeProps) {
         <p className="node-title">{data.title || 'Untitled Task'}</p>
         <div className="node-details">
           {data.assignee && (
-            <span className="node-badge task-badge">
-              👤 {data.assignee}
-            </span>
+            <span className="node-badge task-badge">👤 {data.assignee}</span>
           )}
           {data.dueDate && (
-            <span className="node-badge task-badge">
-              📅 {data.dueDate}
-            </span>
+            <span className="node-badge task-badge">📅 {data.dueDate}</span>
           )}
         </div>
         {data.customFields.length > 0 && (
@@ -48,8 +48,8 @@ function TaskNodeComponent({ data, selected }: TaskNodeProps) {
       {hasErrors && (
         <div className="node-error-indicator" title={data.errors!.join(', ')}>!</div>
       )}
-      <Handle type="target" position={Position.Top} className="handle-target task-handle" />
-      <Handle type="source" position={Position.Bottom} className="handle-source task-handle" />
+      <Handle type="target" position={targetPos} className="handle-target task-handle" />
+      <Handle type="source" position={sourcePos} className="handle-source task-handle" />
     </div>
   );
 }

@@ -1,17 +1,19 @@
 /**
  * End Node — Terminal point of the HR workflow.
- * Red accent with flag icon. Shows end message and summary flag.
  */
-
 import { memo } from 'react';
 import { Handle, Position, type NodeProps } from '@xyflow/react';
 import { Flag } from 'lucide-react';
+import { useWorkflowStore } from '../hooks/useWorkflowStore';
 import type { EndNodeData } from '../types/workflow';
 
 type EndNodeProps = NodeProps & { data: EndNodeData };
 
 function EndNodeComponent({ data, selected }: EndNodeProps) {
   const hasErrors = data.errors && data.errors.length > 0;
+  const layoutDirection = useWorkflowStore((s) => s.layoutDirection);
+
+  const targetPos = layoutDirection === 'LR' ? Position.Left : Position.Top;
 
   return (
     <div
@@ -36,8 +38,7 @@ function EndNodeComponent({ data, selected }: EndNodeProps) {
       {hasErrors && (
         <div className="node-error-indicator" title={data.errors!.join(', ')}>!</div>
       )}
-      {/* End node only has a target handle (input) */}
-      <Handle type="target" position={Position.Top} className="handle-target end-handle" />
+      <Handle type="target" position={targetPos} className="handle-target end-handle" />
     </div>
   );
 }

@@ -21,6 +21,8 @@ import {
   type EdgeChange,
 } from '@xyflow/react';
 
+import { getLayoutedElements } from '../utils/layout';
+
 import type {
   WorkflowNode,
   WorkflowEdge,
@@ -49,6 +51,9 @@ interface WorkflowState {
   
   // ── Workflow metadata ──
   workflowName: string;
+  layoutDirection: 'TB' | 'LR';
+  isLayoutChosen: boolean;
+  theme: 'dark' | 'light';
   
   // ── React Flow handlers ──
   onNodesChange: OnNodesChange<WorkflowNode>;
@@ -75,6 +80,10 @@ interface WorkflowState {
   setWorkflowName: (name: string) => void;
   loadWorkflow: (nodes: WorkflowNode[], edges: WorkflowEdge[], name?: string) => void;
   clearWorkflow: () => void;
+  setLayoutDirection: (dir: 'TB' | 'LR') => void;
+  setLayoutChosen: (chosen: boolean) => void;
+  applyAutoLayout: () => void;
+  toggleTheme: () => void;
 }
 
 // ─── Store Implementation ────────────────────────────────────────
@@ -88,6 +97,9 @@ export const useWorkflowStore = create<WorkflowState>((set, get) => ({
   showSimulation: false,
   validationResult: null,
   workflowName: 'tredence',
+  layoutDirection: 'TB',
+  isLayoutChosen: false,
+  theme: 'dark',
 
   // ── React Flow change handlers ──
   onNodesChange: (changes: NodeChange<WorkflowNode>[]) => {
@@ -234,6 +246,42 @@ export const useWorkflowStore = create<WorkflowState>((set, get) => ({
       simulationLogs: [],
       validationResult: null,
       showSimulation: false,
+      isLayoutChosen: false,
     });
+  },
+  
+  setLayoutDirection: (dir) => {
+    set({ layoutDirection: dir, isLayoutChosen: true });
+    get().applyAutoLayout();
+  },
+  
+  setLayoutChosen: (chosen) => set({ isLayoutChosen: chosen }),
+  
+  applyAutoLayout: () => {
+    const { nodes, edges, layoutDirection } = get();
+    if (nodes.length === 0) return;
+    
+    const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
+      nodes,
+      edges,
+      layoutDirection
+    );
+    
+    // Clear sourceHandle/targetHandle so edges re-route to the new handle positions
+    const cleanEdges = layoutedEdges.map((e) => ({
+      ...e,
+      sourceHandle: undefined,
+      targetHandle: undefined,
+      type: 'smoothstep',
+    }));
+    
+    set({
+      nodes: layoutedNodes,
+      edges: cleanEdges as WorkflowEdge[],
+    });
+  },
+  
+  toggleTheme: () => {
+    set({ theme: get().theme === 'dark' ? 'light' : 'dark' });
   },
 }));

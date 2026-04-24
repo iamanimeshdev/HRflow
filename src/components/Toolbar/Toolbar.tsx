@@ -5,7 +5,7 @@
  * Also displays workflow name (editable).
  */
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import {
   CheckCircle,
   PlayCircle,
@@ -13,8 +13,13 @@ import {
   Upload,
   AlertTriangle,
   Loader2,
-  Trash2,
+  LayoutDashboard,
+  FilePlus,
+  MinusCircle,
+  Sun,
+  Moon,
 } from 'lucide-react';
+import { useReactFlow, useUpdateNodeInternals } from '@xyflow/react';
 import { useWorkflowStore } from '../../hooks/useWorkflowStore';
 import { useValidation } from '../../hooks/useValidation';
 import { simulateWorkflow } from '../../api/mockApi';
@@ -31,7 +36,12 @@ export function Toolbar() {
   const setShowSimulation = useWorkflowStore((s) => s.setShowSimulation);
   const loadWorkflow = useWorkflowStore((s) => s.loadWorkflow);
   const clearWorkflow = useWorkflowStore((s) => s.clearWorkflow);
+  const deleteSelected = useWorkflowStore((s) => s.deleteSelected);
+  const theme = useWorkflowStore((s) => s.theme);
+  const toggleTheme = useWorkflowStore((s) => s.toggleTheme);
 
+  const { fitView, getNodes } = useReactFlow();
+  const updateNodeInternals = useUpdateNodeInternals();
   const { validate, validationResult } = useValidation();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'warning' } | null>(null);
@@ -40,6 +50,25 @@ export function Toolbar() {
     setToast({ message, type });
     setTimeout(() => setToast(null), 4000);
   };
+
+  // ── Apply layout + fit view ──
+  const handleAlignLayout = useCallback(() => {
+    // Just trigger layout calculation, direction is already locked
+    useWorkflowStore.getState().applyAutoLayout();
+    
+    // Use rAF to wait for React to commit the DOM with new positions,
+    // then tell React Flow to recalculate handle positions
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const nodeIds = getNodes().map(n => n.id);
+        updateNodeInternals(nodeIds);
+        // After internals update, fit the view
+        setTimeout(() => {
+          fitView({ duration: 500, padding: 0.25, maxZoom: 1 });
+        }, 80);
+      });
+    });
+  }, [getNodes, updateNodeInternals, fitView]);
 
   // ── Validate ──
   const handleValidate = () => {
@@ -149,6 +178,18 @@ export function Toolbar() {
         <div className="toolbar-divider" />
 
         <button
+          className="toolbar-btn cursor-pointer bg-purple-600/20 text-purple-300 hover:bg-purple-600 hover:text-white border border-purple-500/30 hover:border-purple-500 transition-colors"
+          onClick={handleAlignLayout}
+          title="Auto-align layout"
+          disabled={nodes.length === 0}
+        >
+          <LayoutDashboard size={16} />
+          <span>Align Layout</span>
+        </button>
+
+        <div className="toolbar-divider" />
+
+        <button
           className="toolbar-btn toolbar-btn-ghost"
           onClick={handleExport}
           title="Export as JSON"
@@ -178,12 +219,33 @@ export function Toolbar() {
         <div className="toolbar-divider" />
 
         <button
-          className="toolbar-btn toolbar-btn-danger"
-          onClick={clearWorkflow}
-          title="Clear canvas"
+          className="toolbar-btn cursor-pointer bg-rose-500/10 text-rose-400 hover:bg-rose-500 hover:text-white border border-rose-500/20 hover:border-rose-500 transition-colors"
+          onClick={deleteSelected}
+          title="Delete selected nodes"
           disabled={nodes.length === 0}
         >
-          <Trash2 size={16} />
+          <MinusCircle size={16} />
+          <span>Delete</span>
+        </button>
+
+        <button
+          className="toolbar-btn cursor-pointer bg-slate-600/20 text-slate-300 hover:bg-slate-600 hover:text-white border border-slate-500/30 hover:border-slate-500 transition-colors"
+          onClick={clearWorkflow}
+          title="New canvas"
+          disabled={nodes.length === 0}
+        >
+          <FilePlus size={16} />
+          <span>New Canvas</span>
+        </button>
+
+        <div className="toolbar-divider" />
+
+        <button
+          className="toolbar-btn toolbar-btn-ghost cursor-pointer"
+          onClick={toggleTheme}
+          title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+        >
+          {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
         </button>
       </div>
 

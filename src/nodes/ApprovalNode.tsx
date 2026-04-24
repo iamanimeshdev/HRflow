@@ -1,17 +1,21 @@
 /**
  * Approval Node — Represents an approval step in the workflow.
- * Amber accent with shield icon. Shows approver role and threshold.
  */
-
 import { memo } from 'react';
 import { Handle, Position, type NodeProps } from '@xyflow/react';
 import { ShieldCheck } from 'lucide-react';
+import { useWorkflowStore } from '../hooks/useWorkflowStore';
 import type { ApprovalNodeData } from '../types/workflow';
 
 type ApprovalNodeProps = NodeProps & { data: ApprovalNodeData };
 
 function ApprovalNodeComponent({ data, selected }: ApprovalNodeProps) {
   const hasErrors = data.errors && data.errors.length > 0;
+  const layoutDirection = useWorkflowStore((s) => s.layoutDirection);
+
+  const isHorizontal = layoutDirection === 'LR';
+  const targetPos = isHorizontal ? Position.Left : Position.Top;
+  const sourcePos = isHorizontal ? Position.Right : Position.Bottom;
 
   return (
     <div
@@ -31,22 +35,18 @@ function ApprovalNodeComponent({ data, selected }: ApprovalNodeProps) {
         <p className="node-title">{data.title || 'Approval Step'}</p>
         <div className="node-details">
           {data.approverRole && (
-            <span className="node-badge approval-badge">
-              🔐 {data.approverRole}
-            </span>
+            <span className="node-badge approval-badge">🔐 {data.approverRole}</span>
           )}
           {data.autoApproveThreshold > 0 && (
-            <span className="node-badge approval-badge">
-              ⚡ Auto-approve &lt; {data.autoApproveThreshold}
-            </span>
+            <span className="node-badge approval-badge">⚡ Auto-approve &lt; {data.autoApproveThreshold}</span>
           )}
         </div>
       </div>
       {hasErrors && (
         <div className="node-error-indicator" title={data.errors!.join(', ')}>!</div>
       )}
-      <Handle type="target" position={Position.Top} className="handle-target approval-handle" />
-      <Handle type="source" position={Position.Bottom} className="handle-source approval-handle" />
+      <Handle type="target" position={targetPos} className="handle-target approval-handle" />
+      <Handle type="source" position={sourcePos} className="handle-source approval-handle" />
     </div>
   );
 }

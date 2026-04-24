@@ -128,6 +128,7 @@ export function NodeSidebar() {
           Quick Tips
         </h2>
         <ul className="tips-list">
+          <li>Press <kbd>1</kbd>-<kbd>5</kbd> for Hot-Placement</li>
           <li>Drag nodes onto the canvas</li>
           <li>Connect nodes by dragging handles</li>
           <li>Click a node to configure it</li>

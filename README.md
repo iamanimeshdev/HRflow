@@ -2,7 +2,7 @@
 
 <img width="1919" height="874" alt="image" src="https://github.com/user-attachments/assets/b421549b-3105-4fe5-be0c-b2ea6b4418bc" />
 
-A premium, interactive Visual Workflow Designer built for HR administrators to construct, configure, validate, and simulate complex operational workflows (e.g., employee onboarding, document verification, leave approvals) through an intuitive, state-of-the-art drag-and-drop interface.
+A premium, interactive Visual Workflow Designer built for HR administrators to construct, configure, validate, and simulate complex operational workflows (e.g., employee onboarding, document verification, leave approvals). It features an intuitive, state-of-the-art drag-and-drop interface supercharged with keyboard shortcuts (hotkeys), intelligent auto-alignment, dynamic edge styling, and a sleek dark/light mode aesthetic for a true enterprise SaaS experience.
 
 ##  Quick Start (How to Run)
 
@@ -52,7 +52,7 @@ The application is built with a heavy focus on **modularity, scalability, and se
 2. **Decoupled Node Logic**: Each custom node in `src/nodes/` is self-contained. Adding a new node type (e.g., "Wait Node") requires simply creating a new component and registering it, satisfying the Open-Closed Principle.
 3. **Dynamic Forms Component**: The Config Panel dynamically resolves the required form fields based on the selected node's `type` and `data` schema. This prevents monolithic `switch` statements and makes the UI highly extensible.
 4. **Graph-based Validation Engine**: Workflows are validated by traversing the graph (edges/nodes) to detect disjointed graphs, missing configurations, and missing Start/End caps before simulation.
-5. **Dark-Mode Premium UI**: Opted for a sleek, OLED-optimized dark theme ("full dark") to emulate professional SaaS tools, reducing eye strain for admins building complex flows.
+5. **Dark/Light Mode Premium UI**: Opted for a smooth dark and light mode theme to emulate professional tools, enhancing user experience and reducing eye strain for professionals building complex workflows.
 
 ---
 
@@ -69,6 +69,11 @@ The application is built with a heavy focus on **modularity, scalability, and se
 - **Export/Import as JSON**: Users can save their workflow to disk and restore it flawlessly, demonstrating complex graph state serialization.
 - **Mini-map & Zoom Controls**: Implemented a comprehensive viewport control system (React Flow MiniMap and Controls) for navigating massive, complex HR workflows effortlessly.
 - **Visual Validation Errors**: The validation engine highlights disconnected or improperly configured nodes directly on the canvas in real-time, drastically improving UX and discoverability of errors.
+- **Keyboard Shortcuts (Hot Keys)**: Implemented hot keys for rapid workflow management, enhancing accessibility and speed.
+- **Layout Configuration**: Enforces a Horizontal or Vertical orientation choice via a beautiful glassmorphism modal upon launching or creating a new canvas.
+- **Auto-Align Utility**: Single-click auto-alignment tool that respects the user's initial layout selection and intelligently tidies the visual graph.
+- **Light/Dark Mode Aesthetic Overhaul**: Enhanced light mode visibility for UI elements and a soothing dotted background grid, contrasting with the dark mode's OLED-optimized design.
+
 
 ---
 
@@ -81,6 +86,6 @@ I prioritized core architecture, smooth interactions, and robust state managemen
 3. **LLM-Powered Auto-Fill**: Integrate a Large Language Model to intelligently auto-fill complex node configuration forms and suggest workflow steps based on context.
 4. **Node Version History**: Implement a diffing system allowing users to track changes to individual node configurations over time.
 5. **Comprehensive E2E Testing**: Add Cypress or Playwright test suites to automate the visual validation of drag-and-drop operations and graph connections.
-6. **Undo / Redo Functionality**: Integrate a robust state-history stack allowing users to safely backtrack changes during the design process.
+
 
 ---

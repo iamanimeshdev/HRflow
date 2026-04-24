@@ -1,17 +1,18 @@
 /**
  * Start Node — Entry point of the HR workflow.
- * Visually distinguished with green accent and play icon.
  */
-
 import { memo } from 'react';
 import { Handle, Position, type NodeProps } from '@xyflow/react';
 import { Play } from 'lucide-react';
+import { useWorkflowStore } from '../hooks/useWorkflowStore';
 import type { StartNodeData } from '../types/workflow';
 
 type StartNodeProps = NodeProps & { data: StartNodeData };
 
 function StartNodeComponent({ data, selected }: StartNodeProps) {
   const hasErrors = data.errors && data.errors.length > 0;
+  const layoutDirection = useWorkflowStore((s) => s.layoutDirection);
+  const sourcePos = layoutDirection === 'LR' ? Position.Right : Position.Bottom;
 
   return (
     <div
@@ -36,8 +37,7 @@ function StartNodeComponent({ data, selected }: StartNodeProps) {
       {hasErrors && (
         <div className="node-error-indicator" title={data.errors!.join(', ')}>!</div>
       )}
-      {/* Start node only has a source handle (output) */}
-      <Handle type="source" position={Position.Bottom} className="handle-source start-handle" />
+      <Handle type="source" position={sourcePos} className="handle-source start-handle" />
     </div>
   );
 }
